@@ -1,1 +1,392 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   ALFA THEME - Warm, Playful & High-Contrast
+   ============================================ */
+
+@theme inline {
+  /* Border Radius - Soft geometry with rounded corners */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --radius-full: 9999px;
+
+  /* Semantic Color Mappings */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand Colors */
+  --color-maize: var(--maize);
+  --color-maize-foreground: var(--maize-foreground);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-foreground: var(--charcoal-foreground);
+  --color-cream: var(--cream);
+  --color-cream-foreground: var(--cream-foreground);
+
+  /* Illustration Accent Colors */
+  --color-sky: var(--sky-accent);
+  --color-leaf: var(--leaf-accent);
+
+  /* Chart Colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sidebar Colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Typography */
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  /* Base radius for soft geometry */
+  --radius: 1.25rem;
+
+  /* Primary Brand Color - Maize Yellow (Sunny, playful) */
+  --maize: #FDCB6E;
+  --maize-foreground: #1E1E1E;
+
+  /* Primary Dark - Charcoal/Soft Black */
+  --charcoal: #1E1E1E;
+  --charcoal-foreground: #FFFFFF;
+
+  /* Secondary Background - Cream/Off-White */
+  --cream: #FFFDF5;
+  --cream-foreground: #1E1E1E;
+
+  /* Illustration Accents */
+  --sky-accent: #74B9FF;
+  --leaf-accent: #55EFC4;
+
+  /* Semantic Colors */
+  --background: #FFFDF5;
+  --foreground: #1E1E1E;
+
+  --card: #FFFFFF;
+  --card-foreground: #1E1E1E;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1E1E1E;
+
+  /* Primary uses Maize Yellow */
+  --primary: #FDCB6E;
+  --primary-foreground: #1E1E1E;
+
+  /* Secondary uses Charcoal */
+  --secondary: #1E1E1E;
+  --secondary-foreground: #FFFFFF;
+
+  --muted: #F5F3EB;
+  --muted-foreground: #6B6B6B;
+
+  --accent: #FDCB6E;
+  --accent-foreground: #1E1E1E;
+
+  --destructive: #E74C3C;
+
+  --border: #E8E5DC;
+  --input: #E8E5DC;
+  --ring: #FDCB6E;
+
+  /* Chart Colors - Vibrant & Playful */
+  --chart-1: #FDCB6E;
+  --chart-2: #74B9FF;
+  --chart-3: #55EFC4;
+  --chart-4: #A29BFE;
+  --chart-5: #FD79A8;
+
+  /* Sidebar - Charcoal theme */
+  --sidebar: #1E1E1E;
+  --sidebar-foreground: #FFFFFF;
+  --sidebar-primary: #FDCB6E;
+  --sidebar-primary-foreground: #1E1E1E;
+  --sidebar-accent: #2D2D2D;
+  --sidebar-accent-foreground: #FFFFFF;
+  --sidebar-border: #3D3D3D;
+  --sidebar-ring: #FDCB6E;
+}
+
+.dark {
+  /* Dark mode - Charcoal base with Maize accents */
+  --background: #1E1E1E;
+  --foreground: #FFFDF5;
+
+  --card: #2D2D2D;
+  --card-foreground: #FFFDF5;
+
+  --popover: #2D2D2D;
+  --popover-foreground: #FFFDF5;
+
+  --primary: #FDCB6E;
+  --primary-foreground: #1E1E1E;
+
+  --secondary: #3D3D3D;
+  --secondary-foreground: #FFFDF5;
+
+  --muted: #3D3D3D;
+  --muted-foreground: #A0A0A0;
+
+  --accent: #FDCB6E;
+  --accent-foreground: #1E1E1E;
+
+  --destructive: #E74C3C;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #FDCB6E;
+
+  /* Dark mode charts */
+  --chart-1: #FDCB6E;
+  --chart-2: #74B9FF;
+  --chart-3: #55EFC4;
+  --chart-4: #A29BFE;
+  --chart-5: #FD79A8;
+
+  /* Sidebar stays consistent */
+  --sidebar: #151515;
+  --sidebar-foreground: #FFFDF5;
+  --sidebar-primary: #FDCB6E;
+  --sidebar-primary-foreground: #1E1E1E;
+  --sidebar-accent: #2D2D2D;
+  --sidebar-accent-foreground: #FFFDF5;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #FDCB6E;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+  }
+
+  /* Typography Hierarchy */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading font-semibold tracking-tight;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl;
+  }
+}
+
+/* ============================================
+   Custom Utility Classes (Plain CSS)
+   ============================================ */
+
+/* Pill Button - Fully rounded base styles */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s ease-out;
+}
+
+.btn-pill:hover {
+  transform: scale(1.05);
+}
+
+.btn-pill:active {
+  transform: scale(0.95);
+}
+
+.btn-pill-primary {
+  background-color: var(--maize);
+  color: var(--charcoal);
+  box-shadow: 0 10px 25px -5px rgba(253, 203, 110, 0.25);
+}
+
+.btn-pill-primary:hover {
+  background-color: #FFC854;
+}
+
+.btn-pill-secondary {
+  background-color: var(--charcoal);
+  color: white;
+  box-shadow: 0 10px 25px -5px rgba(30, 30, 30, 0.25);
+}
+
+.btn-pill-secondary:hover {
+  background-color: #2D2D2D;
+}
+
+.btn-pill-outline {
+  background-color: transparent;
+  border: 2px solid var(--charcoal);
+  color: var(--charcoal);
+}
+
+.btn-pill-outline:hover {
+  background-color: var(--charcoal);
+  color: white;
+}
+
+/* Card styles - Large rounded corners, soft shadow */
+.card-elevated {
+  background-color: var(--card);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(30, 30, 30, 0.05);
+  border: 1px solid rgba(232, 229, 220, 0.5);
+}
+
+.card-dark {
+  background-color: var(--charcoal);
+  color: var(--charcoal-foreground);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+}
+
+/* Highlight pill for emphasized words */
+.highlight-pill {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  background-color: var(--maize);
+  border-radius: 9999px;
+  color: var(--charcoal);
+}
+
+/* Section backgrounds */
+.section-maize {
+  background-color: var(--maize);
+}
+
+.section-cream {
+  background-color: var(--cream);
+}
+
+.section-charcoal {
+  background-color: var(--charcoal);
+  color: white;
+}
+
+/* Decorative squiggle animation */
+@keyframes squiggle {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-5px) rotate(2deg);
+  }
+  75% {
+    transform: translateY(5px) rotate(-2deg);
+  }
+}
+
+.animate-squiggle {
+  animation: squiggle 3s ease-in-out infinite;
+}
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Icon with blob background */
+.icon-blob {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-blob::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: var(--maize);
+  border-radius: 9999px;
+  transform: scale(1.5);
+  z-index: -1;
+  opacity: 0.3;
+}
+
+/* ============================================
+   Selection & Scrollbar Styling
+   ============================================ */
+
+::selection {
+  background-color: #FDCB6E;
+  color: #1E1E1E;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--charcoal);
+  border-radius: 9999px;
+  border: 2px solid var(--cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3D3D3D;
+}

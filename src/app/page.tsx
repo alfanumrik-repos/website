@@ -1,7 +1,26 @@
+import { Navbar, Footer } from "@/components/layout";
+import {
+  HeroSection,
+  ProblemSection,
+  DifferentiatorSection,
+  CapabilitiesSection,
+  TrustSection,
+  CTASection,
+} from "@/components/home";
+
 export default function Home() {
   return (
-    <main>
-      <div>Hello world!</div>
-    </main>
+    <>
+      <Navbar />
+      <main>
+        <HeroSection />
+        <ProblemSection />
+        <DifferentiatorSection />
+        <CapabilitiesSection />
+        <TrustSection />
+        <CTASection />
+      </main>
+      <Footer />
+    </>
   );
 }
