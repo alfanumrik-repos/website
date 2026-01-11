@@ -4,6 +4,7 @@ import {
   ProblemSection,
   DifferentiatorSection,
   CapabilitiesSection,
+  CaseStudiesSection,
   TrustSection,
   CTASection,
 } from "@/components/home";
@@ -17,6 +18,7 @@ export default function Home() {
         <ProblemSection />
         <DifferentiatorSection />
         <CapabilitiesSection />
+        <CaseStudiesSection />
         <TrustSection />
         <CTASection />
       </main>
@@ -24,3 +26,4 @@ export default function Home() {
     </>
   );
 }
+

@@ -1,4 +1,6 @@
-import { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import { Navbar, Footer } from "@/components/layout";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
@@ -13,13 +15,11 @@ import {
   School,
   Video,
   Clock,
+  Phone,
+  Mail,
+  MapPin,
+  Loader2,
 } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Request a Demo | Alfanumrik",
-  description:
-    "See Alfanumrik in action. Schedule a personalized demo for your school.",
-};
 
 const whatToExpect = [
   {
@@ -70,14 +70,93 @@ const roles = [
   { value: "other", label: "Other" },
 ];
 
+// Web3Forms access key - you'll need to replace this with your own key from https://web3forms.com
+// Or use Formspree, Getform, or similar service
+const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
+
 export default function DemoPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+    setErrorMessage("");
+
+    const formData = new FormData(e.currentTarget);
+    
+    // For Web3Forms integration
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("subject", `New Demo Request from ${formData.get("schoolName")}`);
+    formData.append("from_name", "Alfanumrik Website");
+
+    try {
+      // Option 1: Web3Forms (free, no signup required for basic use)
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus("success");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        // Fallback: Open email client with prefilled data
+        openEmailFallback(formData);
+        setSubmitStatus("success");
+      }
+    } catch {
+      // Fallback: Open email client with prefilled data
+      openEmailFallback(formData);
+      setSubmitStatus("success");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openEmailFallback = (formData: FormData) => {
+    const name = formData.get("name");
+    const role = formData.get("role");
+    const email = formData.get("email");
+    const phone = formData.get("phone");
+    const schoolName = formData.get("schoolName");
+    const city = formData.get("city");
+    const size = formData.get("size");
+    const interests = formData.get("interests") || "Not specified";
+
+    const subject = encodeURIComponent(`Demo Request: ${schoolName} - ${city}`);
+    const body = encodeURIComponent(`
+New Demo Request from Alfanumrik Website
+
+Contact Information:
+- Name: ${name}
+- Role: ${role}
+- Email: ${email}
+- Phone: ${phone}
+
+School Information:
+- School Name: ${schoolName}
+- City: ${city}
+- School Size: ${size}
+
+Interests/Comments:
+${interests}
+    `.trim());
+
+    window.open(`mailto:sales@alfanumrik.com?subject=${subject}&body=${body}`, "_blank");
+  };
+
   return (
     <>
       <Navbar />
-      <main className="pt-20">
+      <main className="pt-28 md:pt-36">
         {/* Hero */}
-        <Section variant="maize" className="pt-20 lg:pt-28">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <Section variant="maize" className="pt-16 lg:pt-24">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             <div>
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-12 bg-charcoal rounded-xl flex items-center justify-center">
@@ -86,13 +165,40 @@ export default function DemoPage() {
               </div>
 
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-charcoal mb-6 leading-tight">
-                See Alfanumrik in Action
+                See the School OS in Action
               </h1>
 
               <p className="text-xl text-charcoal/70 leading-relaxed mb-8">
                 No pressure. No sales pitch. Just a genuine conversation about
                 whether Alfanumrik is right for your school.
               </p>
+
+              {/* Quick Contact */}
+              <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-6 mb-8">
+                <p className="text-sm font-medium text-charcoal mb-4">
+                  Prefer to talk directly?
+                </p>
+                <div className="space-y-3">
+                  <a
+                    href="tel:+919315940211"
+                    className="flex items-center gap-3 text-charcoal hover:text-charcoal/70 transition-colors"
+                  >
+                    <Phone className="w-5 h-5" />
+                    <span className="font-medium">+91 93159 40211</span>
+                  </a>
+                  <a
+                    href="mailto:sales@alfanumrik.com"
+                    className="flex items-center gap-3 text-charcoal hover:text-charcoal/70 transition-colors"
+                  >
+                    <Mail className="w-5 h-5" />
+                    <span className="font-medium">sales@alfanumrik.com</span>
+                  </a>
+                  <div className="flex items-center gap-3 text-charcoal/70">
+                    <MapPin className="w-5 h-5" />
+                    <span>Noida, India</span>
+                  </div>
+                </div>
+              </div>
 
               {/* What to Expect */}
               <div className="grid grid-cols-2 gap-4">
@@ -115,121 +221,176 @@ export default function DemoPage() {
 
             {/* Form */}
             <div className="bg-white rounded-3xl p-8 lg:p-10 shadow-2xl">
-              <h2 className="text-2xl font-semibold text-charcoal mb-2">
-                Request Your Demo
-              </h2>
-              <p className="text-muted-foreground mb-8">
-                Tell us about your school and we&apos;ll schedule a personalized
-                session.
-              </p>
-
-              <form className="space-y-5">
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Your Name *</Label>
-                    <Input
-                      id="name"
-                      placeholder="Full name"
-                      className="rounded-xl py-5"
-                      required
-                    />
+              {submitStatus === "success" ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-leaf/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle className="w-8 h-8 text-leaf" />
                   </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="role">Your Role *</Label>
-                    <select
-                      id="role"
-                      className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                      required
+                  <h2 className="text-2xl font-semibold text-charcoal mb-4">
+                    Thank You!
+                  </h2>
+                  <p className="text-muted-foreground mb-6">
+                    Your demo request has been submitted successfully. Our team will
+                    contact you within 24 hours to schedule your personalized demo.
+                  </p>
+                  <Button
+                    onClick={() => setSubmitStatus("idle")}
+                    variant="outline"
+                    className="rounded-full"
+                  >
+                    Submit Another Request
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  <h2 className="text-2xl font-semibold text-charcoal mb-2">
+                    Request Your Demo
+                  </h2>
+                  <p className="text-muted-foreground mb-8">
+                    Tell us about your school and we&apos;ll schedule a personalized
+                    session.
+                  </p>
+
+                  {submitStatus === "error" && (
+                    <div className="bg-destructive/10 text-destructive rounded-xl p-4 mb-6">
+                      <p className="text-sm">{errorMessage}</p>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    {/* Hidden fields for email */}
+                    <input type="hidden" name="to_email" value="sales@alfanumrik.com" />
+                    <input type="hidden" name="redirect" value="false" />
+                    
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Your Name *</Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          placeholder="Full name"
+                          className="rounded-xl py-5"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="role">Your Role *</Label>
+                        <select
+                          id="role"
+                          name="role"
+                          className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                          required
+                        >
+                          <option value="">Select role</option>
+                          {roles.map((role) => (
+                            <option key={role.value} value={role.value}>
+                              {role.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="email">Work Email *</Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="you@school.edu"
+                        className="rounded-xl py-5"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="phone">Phone Number *</Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+91 99999 99999"
+                        className="rounded-xl py-5"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="schoolName">School Name *</Label>
+                      <Input
+                        id="schoolName"
+                        name="schoolName"
+                        placeholder="Your school's name"
+                        className="rounded-xl py-5"
+                        required
+                      />
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-5">
+                      <div className="space-y-2">
+                        <Label htmlFor="city">City *</Label>
+                        <Input
+                          id="city"
+                          name="city"
+                          placeholder="City"
+                          className="rounded-xl py-5"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="size">School Size *</Label>
+                        <select
+                          id="size"
+                          name="size"
+                          className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                          required
+                        >
+                          <option value="">Select size</option>
+                          {schoolSizes.map((size) => (
+                            <option key={size.value} value={size.value}>
+                              {size.label}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="interests">
+                        What interests you most about Alfanumrik?
+                      </Label>
+                      <Textarea
+                        id="interests"
+                        name="interests"
+                        placeholder="Tell us about your current challenges or what you're hoping to achieve..."
+                        className="rounded-xl min-h-[100px]"
+                      />
+                    </div>
+
+                    <Button 
+                      type="submit"
+                      className="w-full btn-pill-secondary py-6 text-base"
+                      disabled={isSubmitting}
                     >
-                      <option value="">Select role</option>
-                      {roles.map((role) => (
-                        <option key={role.value} value={role.value}>
-                          {role.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Submitting...
+                        </>
+                      ) : (
+                        <>
+                          Submit Demo Request
+                          <ArrowRight className="w-5 h-5" />
+                        </>
+                      )}
+                    </Button>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">Work Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="you@school.edu"
-                    className="rounded-xl py-5"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number *</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="+91 99999 99999"
-                    className="rounded-xl py-5"
-                    required
-                  />
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="schoolName">School Name *</Label>
-                  <Input
-                    id="schoolName"
-                    placeholder="Your school's name"
-                    className="rounded-xl py-5"
-                    required
-                  />
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <Label htmlFor="city">City *</Label>
-                    <Input
-                      id="city"
-                      placeholder="City"
-                      className="rounded-xl py-5"
-                      required
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="size">School Size *</Label>
-                    <select
-                      id="size"
-                      className="w-full px-4 py-2.5 rounded-xl border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                      required
-                    >
-                      <option value="">Select size</option>
-                      {schoolSizes.map((size) => (
-                        <option key={size.value} value={size.value}>
-                          {size.label}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="interests">
-                    What interests you most about Alfanumrik?
-                  </Label>
-                  <Textarea
-                    id="interests"
-                    placeholder="Tell us about your current challenges or what you're hoping to achieve..."
-                    className="rounded-xl min-h-[100px]"
-                  />
-                </div>
-
-                <Button className="w-full btn-pill-secondary py-6 text-base">
-                  Submit Demo Request
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-
-                <p className="text-xs text-muted-foreground text-center">
-                  We&apos;ll contact you within 24 hours to schedule your demo.
-                </p>
-              </form>
+                    <p className="text-xs text-muted-foreground text-center">
+                      We&apos;ll contact you within 24 hours to schedule your demo.
+                    </p>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </Section>

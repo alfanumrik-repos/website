@@ -20,32 +20,36 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Alfanumrik | The Cognitive Operating System for Future-Ready Schools",
+    default: "Alfanumrik | School Management Intelligence Platform for Indian K-12 Schools",
     template: "%s | Alfanumrik",
   },
   description:
-    "Alfanumrik is the cognitive operating system for modern schools. Unifying operations, academics, adaptive learning, finance, and stakeholder experience into one intelligent platform.",
+    "Alfanumrik is an AI-powered school management intelligence platform combining ERP, LMS, finance, and adaptive learning for Indian K-12 schools. Reduce admin workload, improve teacher efficiency, and boost student outcomes.",
   keywords: [
-    "school management system",
-    "school ERP",
-    "learning management system",
-    "adaptive learning",
+    "school management intelligence platform",
+    "school management system India",
+    "school ERP software",
+    "learning management system K-12",
+    "adaptive learning platform",
     "school software India",
-    "education technology",
+    "education technology India",
+    "AI school management",
+    "school operating system",
+    "School OS",
   ],
   authors: [{ name: "Alfanumrik" }],
   openGraph: {
-    title: "Alfanumrik | The Cognitive Operating System for Future-Ready Schools",
+    title: "Alfanumrik | School Management Intelligence Platform",
     description:
-      "Not just ERP, not just LMS. An intelligence layer for modern schools.",
+      "An AI-powered operating system for Indian K-12 schools—integrating ERP, LMS, finance, and adaptive learning in one intelligent platform.",
     type: "website",
     locale: "en_IN",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Alfanumrik",
+    title: "Alfanumrik | India's First School Intelligence OS",
     description:
-      "The Cognitive Operating System for Future-Ready Schools",
+      "An AI-powered operating system for Indian K-12 schools—integrating ERP, LMS, finance, and adaptive learning.",
   },
 };
 

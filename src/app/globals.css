@@ -343,6 +343,22 @@
   animation: float 4s ease-in-out infinite;
 }
 
+/* Slow pulse for badges */
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 25px -5px rgba(253, 203, 110, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 20px 50px -5px rgba(253, 203, 110, 0.4);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
 /* Icon with blob background */
 .icon-blob {
   position: relative;

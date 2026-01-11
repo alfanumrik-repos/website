@@ -76,7 +76,7 @@ export function CapabilitiesSection() {
     <Section variant="cream">
       <SectionHeader
         eyebrow="The System"
-        title="Capability Pillars"
+        title="Five Pillars of the School OS"
         description="Alfanumrik organizes school intelligence into five interconnected domains. Each speaks to different stakeholders, unified by one platform."
       />
 
@@ -99,7 +99,7 @@ export function CapabilitiesSection() {
           href="/product"
           className="inline-flex items-center gap-2 text-charcoal font-semibold hover:text-charcoal/70 transition-colors"
         >
-          Explore the complete system
+          Explore the complete School OS
           <ArrowUpRight className="w-5 h-5" />
         </Link>
       </div>
@@ -117,7 +117,8 @@ function PillarCard({ pillar, index }: { pillar: Pillar; index: number }) {
         <div className="w-14 h-14 bg-maize/20 rounded-2xl flex items-center justify-center group-hover:bg-maize transition-colors">
           <pillar.icon className="w-7 h-7 text-charcoal" />
         </div>
-        <span className="text-4xl font-bold text-charcoal/5 group-hover:text-maize/30 transition-colors">
+        {/* Enhanced number badge - Much more visible */}
+        <span className="w-12 h-12 flex items-center justify-center text-xl font-bold bg-charcoal/10 text-charcoal/50 rounded-xl group-hover:bg-maize group-hover:text-charcoal transition-all duration-300">
           {String(index + 1).padStart(2, "0")}
         </span>
       </div>
