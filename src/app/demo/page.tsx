@@ -70,10 +70,6 @@ const roles = [
   { value: "other", label: "Other" },
 ];
 
-// Web3Forms access key - you'll need to replace this with your own key from https://web3forms.com
-// Or use Formspree, Getform, or similar service
-const WEB3FORMS_ACCESS_KEY = "YOUR_ACCESS_KEY_HERE";
-
 export default function DemoPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
@@ -86,68 +82,40 @@ export default function DemoPage() {
     setErrorMessage("");
 
     const formData = new FormData(e.currentTarget);
-    
-    // For Web3Forms integration
-    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("subject", `New Demo Request from ${formData.get("schoolName")}`);
-    formData.append("from_name", "Alfanumrik Website");
+    const data = {
+      name: formData.get("name"),
+      role: formData.get("role"),
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+      schoolName: formData.get("schoolName"),
+      city: formData.get("city"),
+      size: formData.get("size"),
+      interests: formData.get("interests"),
+    };
 
     try {
-      // Option 1: Web3Forms (free, no signup required for basic use)
-      const response = await fetch("https://api.web3forms.com/submit", {
+      const response = await fetch("/api/demo", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
 
-      const result = await response.json();
-
-      if (result.success) {
+      if (response.ok) {
         setSubmitStatus("success");
         (e.target as HTMLFormElement).reset();
       } else {
-        // Fallback: Open email client with prefilled data
-        openEmailFallback(formData);
-        setSubmitStatus("success");
+        setSubmitStatus("error");
+        setErrorMessage("Failed to submit demo request. Please try again.");
       }
-    } catch {
-      // Fallback: Open email client with prefilled data
-      openEmailFallback(formData);
-      setSubmitStatus("success");
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
+      setErrorMessage("Failed to submit demo request. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
-  };
-
-  const openEmailFallback = (formData: FormData) => {
-    const name = formData.get("name");
-    const role = formData.get("role");
-    const email = formData.get("email");
-    const phone = formData.get("phone");
-    const schoolName = formData.get("schoolName");
-    const city = formData.get("city");
-    const size = formData.get("size");
-    const interests = formData.get("interests") || "Not specified";
-
-    const subject = encodeURIComponent(`Demo Request: ${schoolName} - ${city}`);
-    const body = encodeURIComponent(`
-New Demo Request from Alfanumrik Website
-
-Contact Information:
-- Name: ${name}
-- Role: ${role}
-- Email: ${email}
-- Phone: ${phone}
-
-School Information:
-- School Name: ${schoolName}
-- City: ${city}
-- School Size: ${size}
-
-Interests/Comments:
-${interests}
-    `.trim());
-
-    window.open(`mailto:sales@alfanumrik.com?subject=${subject}&body=${body}`, "_blank");
   };
 
   return (

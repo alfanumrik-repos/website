@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Metadata } from "next";
 import { Navbar, Footer } from "@/components/layout";
 import { Section } from "@/components/ui/section";
@@ -12,6 +15,7 @@ import {
   MessageCircle,
   ArrowRight,
   Clock,
+  Loader2,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -24,21 +28,21 @@ const contactMethods = [
     icon: Mail,
     title: "Email",
     description: "For general inquiries",
-    value: "hello@alfanumrik.com",
-    href: "mailto:hello@alfanumrik.com",
+    value: "sales@alfanumrik.com",
+    href: "mailto:sales@alfanumrik.com",
   },
   {
     icon: Phone,
     title: "Phone",
     description: "Mon-Fri, 9am-6pm IST",
-    value: "+91 99999 99999",
-    href: "tel:+919999999999",
+    value: "+91 93159 40211",
+    href: "tel:+919315940211",
   },
   {
     icon: MapPin,
     title: "Office",
     description: "Visit us",
-    value: "Bengaluru, India",
+    value: "Noida, India",
     href: "#",
   },
 ];
@@ -53,6 +57,47 @@ const inquiryTypes = [
 ];
 
 export default function ContactPage() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      firstName: formData.get("firstName"),
+      lastName: formData.get("lastName"),
+      email: formData.get("email"),
+      organization: formData.get("organization"),
+      inquiryType: formData.get("inquiryType"),
+      message: formData.get("message"),
+    };
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setSubmitStatus("success");
+        (e.target as HTMLFormElement).reset();
+      } else {
+        setSubmitStatus("error");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setSubmitStatus("error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -112,22 +157,53 @@ export default function ContactPage() {
                 hours.
               </p>
 
-              <form className="space-y-6">
+              {submitStatus === "success" ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 bg-leaf/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <ArrowRight className="w-8 h-8 text-leaf -rotate-45" />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-charcoal mb-4">
+                    Thank You!
+                  </h3>
+                  <p className="text-muted-foreground mb-6">
+                    Your message has been sent successfully. We&apos;ll get back to you within 24 hours.
+                  </p>
+                  <Button
+                    onClick={() => setSubmitStatus("idle")}
+                    variant="outline"
+                    className="rounded-full"
+                  >
+                    Send Another Message
+                  </Button>
+                </div>
+              ) : (
+                <>
+                  {submitStatus === "error" && (
+                    <div className="bg-red-50 text-red-600 rounded-xl p-4 mb-6">
+                      <p className="text-sm">Failed to send message. Please try again or contact us directly.</p>
+                    </div>
+                  )}
+
+                  <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">First Name</Label>
                     <Input
                       id="firstName"
+                      name="firstName"
                       placeholder="Your first name"
                       className="rounded-xl py-6"
+                      required
                     />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Last Name</Label>
                     <Input
                       id="lastName"
+                      name="lastName"
                       placeholder="Your last name"
                       className="rounded-xl py-6"
+                      required
                     />
                   </div>
                 </div>
@@ -136,9 +212,11 @@ export default function ContactPage() {
                   <Label htmlFor="email">Email</Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="you@example.com"
                     className="rounded-xl py-6"
+                    required
                   />
                 </div>
 
@@ -146,8 +224,10 @@ export default function ContactPage() {
                   <Label htmlFor="organization">Organization</Label>
                   <Input
                     id="organization"
+                    name="organization"
                     placeholder="School or organization name"
                     className="rounded-xl py-6"
+                    required
                   />
                 </div>
 
@@ -155,7 +235,9 @@ export default function ContactPage() {
                   <Label htmlFor="inquiryType">Inquiry Type</Label>
                   <select
                     id="inquiryType"
+                    name="inquiryType"
                     className="w-full px-4 py-3 rounded-xl border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                    required
                   >
                     <option value="">Select inquiry type</option>
                     {inquiryTypes.map((type) => (
@@ -170,16 +252,33 @@ export default function ContactPage() {
                   <Label htmlFor="message">Message</Label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Tell us how we can help..."
                     className="rounded-xl min-h-[150px]"
+                    required
                   />
                 </div>
 
-                <Button className="w-full btn-pill-secondary py-6 text-base">
-                  Send Message
-                  <ArrowRight className="w-5 h-5" />
+                <Button 
+                  type="submit"
+                  className="w-full btn-pill-secondary py-6 text-base"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      Send Message
+                      <ArrowRight className="w-5 h-5" />
+                    </>
+                  )}
                 </Button>
               </form>
+              </>
+              )}
             </div>
 
             {/* Info */}

@@ -20,7 +20,7 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Alfanumrik | School Management Intelligence Platform for Indian K-12 Schools",
+    default: "Alfanumrik | School Management Intelligence Platform",
     template: "%s | Alfanumrik",
   },
   description:
@@ -38,6 +38,11 @@ export const metadata: Metadata = {
     "School OS",
   ],
   authors: [{ name: "Alfanumrik" }],
+  icons: {
+    icon: "/images/logo.png",
+    shortcut: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
   openGraph: {
     title: "Alfanumrik | School Management Intelligence Platform",
     description:

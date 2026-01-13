@@ -60,9 +60,24 @@ export function HeroSection() {
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-20 lg:pt-36 lg:pb-24">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left Content */}
-          <div className="max-w-2xl">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Hero Image - Shows first on mobile, second on desktop */}
+          <div className="relative order-1 lg:order-2">
+            <div className="relative w-full aspect-square max-w-md lg:max-w-lg mx-auto flex items-center justify-center">
+              <div className="absolute inset-0 bg-white/30 rounded-[2rem] lg:rounded-[3rem] backdrop-blur-sm border border-white/50 -rotate-3 transition-transform hover:rotate-0 duration-500" />
+              <Image
+                src="/images/hero-illustration.png"
+                alt="Alfanumrik School OS - Connected School Ecosystem showing unified ERP, LMS, Finance, and Adaptive Learning"
+                width={600}
+                height={600}
+                className="relative z-10 drop-shadow-2xl transition-transform hover:scale-105 duration-500"
+                priority
+              />
+            </div>
+          </div>
+
+          {/* Content - Shows second on mobile, first on desktop */}
+          <div className="max-w-2xl order-2 lg:order-1">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-charcoal text-white rounded-full mb-6 shadow-lg">
               <span className="w-2 h-2 bg-leaf rounded-full animate-pulse" />
@@ -75,13 +90,13 @@ export function HeroSection() {
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold text-charcoal leading-tight mb-4">The Intelligence <span className="highlight-pill">Operating System</span> for Schools</h1>
 
             {/* Subheadline - For Whom */}
-            <h2 className="text-xl lg:text-2xl text-charcoal/80 font-medium leading-relaxed mb-4">
+            <h2 className="text-xl lg:text-2xl text-charcoal/80 font-medium leading-relaxed mb-6">
               Built for Indian K-12 schools to unify ERP, LMS, Finance, and
               Adaptive Learning on one AI-driven platform.
             </h2>
 
             {/* Why Now - Key Metrics */}
-            <div className="grid grid-cols-2 gap-3 mb-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
               {metrics.map((metric, index) => (
                 <div
                   key={index}
@@ -142,21 +157,6 @@ export function HeroSection() {
                   </span>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Right Illustration Area */}
-          <div className="relative hidden lg:block">
-            <div className="relative w-full aspect-square max-w-lg mx-auto flex items-center justify-center">
-              <div className="absolute inset-0 bg-white/30 rounded-[3rem] backdrop-blur-sm border border-white/50 -rotate-3 transition-transform hover:rotate-0 duration-500" />
-              <Image
-                src="/images/hero-illustration.png"
-                alt="Alfanumrik School OS - Connected School Ecosystem showing unified ERP, LMS, Finance, and Adaptive Learning"
-                width={600}
-                height={600}
-                className="relative z-10 drop-shadow-2xl transition-transform hover:scale-105 duration-500"
-                priority
-              />
             </div>
           </div>
         </div>
