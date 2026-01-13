@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Metadata } from "next";
 import { Navbar, Footer } from "@/components/layout";
 import { Section } from "@/components/ui/section";
 import { Button } from "@/components/ui/button";
@@ -17,11 +16,6 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Contact | Alfanumrik",
-  description: "Get in touch with the Alfanumrik team. We're here to help.",
-};
 
 const contactMethods = [
   {
