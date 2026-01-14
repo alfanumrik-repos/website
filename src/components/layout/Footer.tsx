@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Mail, Phone, MapPin, Linkedin, ArrowRight } from "lucide-react";
 
 const footerLinks = {
@@ -59,16 +58,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
-                <Image
-                  src="/images/logo.png"
-                  alt="Alfanumrik Logo"
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+            <Link href="/" className="flex items-center mb-6">
               <div className="flex flex-col">
                 <span className="font-heading font-semibold text-xl text-white">
                   Alfanumrik
