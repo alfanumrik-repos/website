@@ -78,7 +78,7 @@ export function Navbar() {
                 <span className="font-heading font-semibold text-xl text-charcoal">
                   Alfanumrik
                 </span>
-                <span className="text-[10px] font-semibold text-leaf bg-maize/50 px-2 py-0.5 rounded-full -mt-0.5 hidden sm:block">
+                <span className="text-xs font-semibold text-leaf bg-maize/60 px-3 py-1 rounded-full mt-0.5 hidden sm:block">
                   School OS
                 </span>
               </div>
