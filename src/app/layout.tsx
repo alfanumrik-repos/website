@@ -38,11 +38,7 @@ export const metadata: Metadata = {
     "School OS",
   ],
   authors: [{ name: "Alfanumrik" }],
-  icons: {
-    icon: "/images/logo.png",
-    shortcut: "/images/logo.png",
-    apple: "/images/logo.png",
-  },
+  // No favicon - using text title only as per branding guidelines
   openGraph: {
     title: "Alfanumrik | School Management Intelligence Platform",
     description:

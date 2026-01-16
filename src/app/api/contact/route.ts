@@ -12,8 +12,8 @@ export async function POST(request: NextRequest) {
 
     // Send email to both recipients
     const { data, error } = await resend.emails.send({
-      from: 'Alfanumrik Contact Form <onboarding@resend.dev>',
-      to: ['shreyash@vidyayatan.com', 'sales@alfanumrik.com'],
+      from: 'Alfanumrik <noreply@internal.vidyayatan.com>',
+      to: ['shreyash@vidyayatan.com', 'Info@Alfanumrik.com'],
       subject: `New Contact Form Submission - ${inquiryType}`,
       html: `
         <h2>New Contact Form Submission</h2>

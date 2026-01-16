@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     // Send email to both recipients
     const { data, error } = await resend.emails.send({
       from: 'Alfanumrik Demo Request <onboarding@resend.dev>',
-      to: ['shreyash@vidyayatan.com', 'sales@alfanumrik.com'],
+      to: ['shreyash@vidyayatan.com', 'Info@Alfanumrik.com'],
       subject: `New Demo Request - ${schoolName}`,
       html: `
         <h2>New Demo Request</h2>

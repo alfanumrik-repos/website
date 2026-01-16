@@ -155,11 +155,11 @@ export default function DemoPage() {
                     <span className="font-medium">+91 93159 40211</span>
                   </a>
                   <a
-                    href="mailto:sales@alfanumrik.com"
+                    href="mailto:Info@Alfanumrik.com"
                     className="flex items-center gap-3 text-charcoal hover:text-charcoal/70 transition-colors"
                   >
                     <Mail className="w-5 h-5" />
-                    <span className="font-medium">sales@alfanumrik.com</span>
+                    <span className="font-medium">Info@Alfanumrik.com</span>
                   </a>
                   <div className="flex items-center gap-3 text-charcoal/70">
                     <MapPin className="w-5 h-5" />
@@ -227,7 +227,7 @@ export default function DemoPage() {
 
                   <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Hidden fields for email */}
-                    <input type="hidden" name="to_email" value="sales@alfanumrik.com" />
+                    <input type="hidden" name="to_email" value="Info@Alfanumrik.com" />
                     <input type="hidden" name="redirect" value="false" />
                     
                     <div className="grid md:grid-cols-2 gap-5">

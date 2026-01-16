@@ -55,10 +55,10 @@ export function Navbar() {
             </a>
             <span className="text-white/50">|</span>
             <a
-              href="mailto:sales@alfanumrik.com"
+              href="mailto:Info@Alfanumrik.com"
               className="hover:text-maize transition-colors"
             >
-              sales@alfanumrik.com
+              Info@Alfanumrik.com
             </a>
           </div>
           <div className="flex items-center gap-2">
@@ -78,7 +78,7 @@ export function Navbar() {
                 <span className="font-heading font-semibold text-xl text-charcoal">
                   Alfanumrik
                 </span>
-                <span className="text-[10px] text-charcoal/60 -mt-1 hidden sm:block">
+                <span className="text-[10px] font-semibold text-leaf bg-maize/50 px-2 py-0.5 rounded-full -mt-0.5 hidden sm:block">
                   School OS
                 </span>
               </div>
@@ -162,10 +162,10 @@ export function Navbar() {
                       +91 93159 40211
                     </a>
                     <a
-                      href="mailto:sales@alfanumrik.com"
+                      href="mailto:Info@Alfanumrik.com"
                       className="text-charcoal/70 text-sm"
                     >
-                      sales@alfanumrik.com
+                      Info@Alfanumrik.com
                     </a>
                   </div>
 

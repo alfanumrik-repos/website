@@ -22,8 +22,8 @@ const contactMethods = [
     icon: Mail,
     title: "Email",
     description: "For general inquiries",
-    value: "sales@alfanumrik.com",
-    href: "mailto:sales@alfanumrik.com",
+    value: "Info@Alfanumrik.com",
+    href: "mailto:Info@Alfanumrik.com",
   },
   {
     icon: Phone,
